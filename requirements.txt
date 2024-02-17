@@ -1,0 +1,13 @@
+langchain
+streamlit
+google-generativeai
+google-cloud-aiplatform
+python-dotenv
+snowflake-connector-python
+Pillow
+PyPDF2
+chromadb
+faiss-cpu
+pdf2image
+sqlite3
+pyodbc
