@@ -8,8 +8,8 @@ import sqlite3
 import google.generativeai as genai
 
 # Connection parameters
-server = 'Karnika'
-database = 'AdventureWorks2022'
+server = 'KARNIKA\SQLEXPRESS01'
+database = 'AdventureWorks2017'
 username = 'pyodbc_conn'
 password = os.getenv("PASSWORD")
 
@@ -31,17 +31,6 @@ def get_gemini_response(question, prompt):
     return response.text
 
 ## Function to retrieve query from the SQL database
-
-def read_sql_query1(sql, db):
-    connection = sqlite3.connect(db)
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    rows=cursor.fetchall()
-    connection.commit()
-    connection.close()
-    for row in rows:
-        print(row)
-    return rows
 
 def read_sql_query(sql, connection_string):
     try:
@@ -66,7 +55,7 @@ def read_sql_query(sql, connection_string):
             connection.close()
 
 ## Define Your Prompt
-promp1 ="""You are an expert in converting English questions to SQL query!
+prompt1 ="""You are an expert in converting English questions to SQL query!
 The SQL database has the name AdventureWorks2017 and the table name is Employees 
 under schema dbo and has the following columns - ID, FirstName, LastName, Gender, Salary
 For example,\nExample 1 - How many count of records are present?, 
@@ -97,13 +86,13 @@ the answer then just say that you do not know the answer. Do not give wrong answ
 st.set_page_config(page_title="I can Retrieve Any SQL query")
 st.header("Gemini App To Retrieve SQL Data")
 
-question=st.text_input("Input: ",key="input")
+question=st.text_input("Input your question: ",key="input")
 
 submit=st.button("Ask the question")
 
 # if submit is clicked
 if submit:
-    response = get_gemini_response(question, prompt)
+    response = get_gemini_response(question, prompt1)
     st.subheader("Generated SQL Query:")
     
     # Display the generated SQL query in an expander
@@ -125,3 +114,4 @@ if submit:
 
 #provide me phonenumber of person FirstName = 'ken' in person.person table by joining it with the  person.personphone table
 #provide me count of persons in persons.persons table with the FirstName = 'ken' and lastname as 'Sánchez'
+#please provide count of people by persontype in the table person.person, where persontype is a column in this table
